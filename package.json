@@ -1,0 +1,30 @@
+{
+  "name": "crawler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/waynecz/AcfunCraw.git"
+  },
+  "keywords": [
+    "azhou921025cheng"
+  ],
+  "author": "waynecz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/waynecz/AcfunCraw/issues"
+  },
+  "homepage": "https://github.com/waynecz/AcfunCraw#readme",
+  "dependencies": {
+    "cheerio": "^0.19.0",
+    "express": "^4.13.3",
+    "request": "^2.67.0",
+    "superagent": "^1.6.1",
+    "utility": "^1.6.0"
+  }
+}
