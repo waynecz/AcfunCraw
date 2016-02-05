@@ -1,4 +1,4 @@
-var cheerio = require('cheerio'); //引入cheerio
+var cheerio = require('cheerio');
 var fs = require('fs');
 var url = require('url');
 var request = require('request');
@@ -19,8 +19,8 @@ var dictionary = {
 	'59_': 'game'
 };
 
-ep.after('fetch_html', codes.length, function (responses) {
-	responses.map(function (response) {
+ep.after('fetch_html', codes.length, function(responses) {
+	responses.map(function(response) {
 		var code = response[0];
 		var body = response[1];
 		var address = 'http://www.acfun.tv';
@@ -38,6 +38,7 @@ ep.after('fetch_html', codes.length, function (responses) {
 			rst.authorLink = url.resolve(address, authorLink);
 			rst.authorText = $e.find('.r>.author>a').text();
 			rst.info = $e.find('.r>.info-extra').text().split('\n')[0];
+			rst.index = i + 1;
 
 			topics.push(rst);
 			// var fileName = parseUrlForFileName(o.img);
@@ -52,29 +53,24 @@ ep.after('fetch_html', codes.length, function (responses) {
 	})
 })
 
-codes.map(function (code) {
+codes.map(function(code) {
 	request({
-		url: 'http://www.acfun.tv/v/list' + code + '/index.htm', 
-		headers: {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'},
-		gzip: true
-	}, 
-	function(error, res, body) {
-		if (!error && res.statusCode == 200) {
-			// var thisUrl =  'http://www.acfun.tv/v/list' + code + '/index.htm';
-			console.log('对接 AC ' + dictionary[code] + ' 成功！');
-			ep.emit('fetch_html', [code, body]);
-		}
-		else {
-			console.log('对接 AC ' + dictionary[code] + '出错啦！出错代码：' + res.statusCode)
-		}
-	})
+			url: 'http://www.acfun.tv/v/list' + code + '/index.htm',
+			headers: {
+				'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'
+			},
+			gzip: true
+		},
+		function(error, res, body) {
+			if (!error && res.statusCode == 200) {
+				// var thisUrl =  'http://www.acfun.tv/v/list' + code + '/index.htm';
+				console.log('飞船对接 AC ' + dictionary[code] + ' 成功！');
+				ep.emit('fetch_html', [code, body]);
+			} else {
+				console.log('飞船与 AC ' + dictionary[code] + '撞毁啦！错误代码：' + res.statusCode)
+			}
+		})
 });
-
-
-
-			
-		
-
 
 
 function parseUrlForFileName(address) {
